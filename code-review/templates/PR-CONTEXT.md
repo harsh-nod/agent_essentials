@@ -28,6 +28,8 @@ secrets and use stable links or checked-in specifications where possible.
 ## Change map
 
 - Components/crates/files changed:
+- Changed executable/configuration/documentation languages and embedded languages:
+- Generated/vendor files and reviewed source/generator instead:
 - Data/state flow before:
 - Data/state flow after:
 - New or changed invariants:
@@ -37,6 +39,15 @@ secrets and use stable links or checked-in specifications where possible.
   configuration contracts changed:
 - Generated code/artifacts and source generator:
 - Dependencies/features/toolchains changed:
+
+## Required reviewer manifest
+
+Inventory every semantic file class using `language-routing.md`. `Covered by`
+must name one persona; do not write only “general review.”
+
+| Changed file class/language | Risk-bearing behavior | Required persona | Covered by provider/model | Status/coverage limit |
+| --- | --- | --- | --- | --- |
+| | | | | planned/running/complete/missing |
 
 ## Supported matrix
 

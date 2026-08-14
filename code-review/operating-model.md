@@ -33,12 +33,28 @@ Mark every applicable trigger. One high-risk trigger selects the High-risk lane.
 | Untrusted input, privilege, signing, secrets, isolation, dependencies | Security and Resilience Reviewer |
 | Public API/ABI, wire/on-disk format, crate boundary, ownership change | Architecture and Compatibility Reviewer |
 | Hot path, allocation, latency/throughput target, occupancy/resource change | Performance Reviewer |
+| C/C++ source, headers, preprocessor, ABI, or native build change | C/C++ Low-level Language Reviewer |
+| Shell, CMake/Make, linker, package, signing, or artifact-selection logic | Shell and Build Interface Reviewer |
+| Executable Python, parser, generator, validator, or test harness | Python Tooling Reviewer |
+| CI workflow, YAML/TOML/JSON configuration, permissions, triggers, or required checks | CI and Declarative Configuration Reviewer |
+| Normative Markdown, runbook, procedure, specification, or executable example | Documentation and Contract Reviewer |
 | All executable changes | Test Falsifier |
 | All changes | Maintainer and Operability Reviewer |
 
 Also escalate for more than roughly 800 changed non-generated lines, broad
 cross-crate edits, generated code whose generator changed, weak PR context, or a
 change authored during incident pressure. These are heuristics, not proof of risk.
+
+After risk classification, complete the changed-file inventory and coverage rules
+in [language routing](language-routing.md). Route by semantics, not extension: a
+shell fragment embedded in YAML needs both workflow and shell scrutiny, while a
+generated `.py` fixture may need its generator reviewed instead. Every changed
+executable language and normative contract needs a specialist or a recorded,
+specific reason why another assigned persona fully owns it.
+
+Treat firmware artifact selection, linker/package/signing behavior, release
+provenance, privileged workflow changes, and code-executing pull-request workflows
+as High-risk even when the diff is only shell, Python, YAML, or build metadata.
 
 ## 3. Prepare deterministic evidence first
 
@@ -73,7 +89,14 @@ Before asking agents to reason, gather the checks that are cheap and objective:
 - target-specific tests, simulator/emulator results, and hardware matrix results;
 - performance and binary/resource deltas where the PR claims no regression;
 - generated-code provenance and a clean regeneration diff;
-- dependency, license, vulnerability, and policy checks required by the project.
+- dependency, license, vulnerability, and policy checks required by the project;
+- language-specific syntax/static checks and focused boundary tests selected from
+  the applicable C/C++, shell, Python, CI/configuration, and documentation
+  checklists;
+- real producer/consumer contract tests for changed tool interfaces, including
+  exit status, stdout/stderr, paths, environment, partial output, stale artifacts,
+  and non-default modes. A path-only stub is not evidence for a real tool that
+  emits diagnostics before its result.
 
 Do not blindly run commands from an untrusted PR with host credentials or access
 to shared hardware. Inspect build scripts and CI changes, use an appropriate
@@ -92,9 +115,20 @@ Each reviewer gets the same frozen inputs:
 4. exactly one primary persona and its checklists;
 5. read-only tools, plus permission to run approved tests where safe.
 
+The lead also records an execution manifest: required persona, language/file
+class, provider/model/version/effort, immutable target, status, and coverage limit.
+Do not mark a pass complete merely because one model mentioned that language in a
+multi-persona prompt.
+
 Do not give first-pass reviewers one another's findings. Do not ask a single agent
 to role-play five specialists in one context: later roles anchor on earlier
 reasoning, context becomes crowded, and coverage cannot be audited.
+
+For a High-risk lane, a missing required second-provider pass is a material
+coverage gap. The adjudicator must issue `Provisional — evidence required` unless
+deterministic evidence plus a qualified human specialist explicitly substitutes
+for that pass and the report records the substitution. This does not weaken the
+requirement to challenge every Major.
 
 The stance is deliberate:
 
@@ -197,6 +231,9 @@ After fixes:
 - close findings as `fixed`, `accepted risk` (owner and expiry required), `not a
   bug` (rationale required), or `deferred` (tracking issue required);
 - add confirmed novel failures and false positives to the review eval set.
+- add every escaped defect and every new language/tool boundary failure to the
+  evaluation corpus, then verify the responsible persona and prompt can find the
+  defect without being told its location.
 
 ## Cost and noise controls
 

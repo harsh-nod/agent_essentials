@@ -56,6 +56,11 @@ watchdog limit.
 - Any public API/ABI/protocol/layout change requires mixed-version analysis.
 - Any performance claim must include representative baseline and changed results,
   hardware/toolchain, input distribution, and variance.
+- Inventory every changed executable or normative language. Route C/C++, shell or
+  build files, Python tooling, CI/YAML/configuration, and Markdown contracts to the
+  matching specialist checklist. Embedded scripts count as their script language.
+- Build/link/package/signing interfaces must be tested with the real producer
+  output shape, including diagnostics, exit status, and stale/partial artifacts.
 
 ### Skip or raise the bar
 

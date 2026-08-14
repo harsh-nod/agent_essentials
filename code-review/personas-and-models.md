@@ -53,6 +53,11 @@ If only one product is available:
 | R10 | Maintainer and Operability Reviewer | Collaborative | Claude Sonnet, high | Codex Terra, high | Every PR |
 | R11 | Contrarian Challenger | Adversarial to findings | Opposite provider from candidate author | Reproducer/spec/human | Every Major and disputed Minor |
 | R12 | Review Lead and Adjudicator | Collaborative and skeptical | Codex Sol, xhigh | Human review lead | Standard and High-risk lanes |
+| R13 | Shell and Build Interface Reviewer | Adversarial to composition assumptions | Codex Sol, high | Claude Opus, high | Shell/build/link/package/sign/artifact logic |
+| R14 | Python Tooling Reviewer | Adversarial to input and failure assumptions | Claude Sonnet, high | Codex Terra, high | Executable Python, generators, validators, harnesses |
+| R15 | CI and Declarative Configuration Reviewer | Adversarial to trust and event assumptions | Claude Opus, high | Codex Sol, high | Workflows, YAML/configuration, permissions, gates |
+| R16 | Documentation and Contract Reviewer | Collaborative, then executable/skeptical | Claude Sonnet, high | Codex Terra, high | Normative docs, procedures, runbooks, examples |
+| R17 | C/C++ Low-level Language Reviewer | Adversarial to undefined behavior | Claude Opus, xhigh | Codex Sol, xhigh | C/C++, headers, ABI, native low-level code |
 
 The verifier column is a default pairing, not a requirement to re-review the
 entire diff. It verifies consequential candidates from the primary pass.
@@ -302,24 +307,144 @@ records coverage gaps. It must not change code during review.
 Use a fresh context. A lead that authored the patch should not adjudicate its own
 review without an independent human owner.
 
+## R13 — Shell and Build Interface Reviewer
+
+**Mission:** Prove that build, link, package, signing, and artifact-selection paths
+compose correctly under the real shell and real producer/consumer interfaces.
+
+**Focus:** quoting and expansion; pipelines and `set -e`; exit-status propagation;
+stdout/stderr as an interface; paths, working directory, environment, traps and
+cleanup; stale/partial artifacts; backend selectors; linker/package/signing output;
+portability; reproducibility and provenance.
+
+**Characteristic questions:**
+
+- Does command substitution capture diagnostics as well as the intended value?
+- Do tests reproduce the real downstream tool's output, exit status, files, and
+  partial-failure behavior rather than a path-only happy-path stub?
+- Can whitespace, newlines, globs, unset variables, subshells, pipelines, or a
+  changed working directory redirect or suppress the operation?
+- Can a failed command leave an old artifact that a later step misattributes as
+  the current build?
+
+**Stopping rule:** Use the [shell and build checklist](checklists/shell-build.md).
+Do not report a portability issue outside the declared interpreter/platform unless
+it also violates the repository's supported contract.
+
+## R14 — Python Tooling Reviewer
+
+**Mission:** Falsify Python scripts, validators, generators, and harnesses across
+supported runtimes, hostile inputs, subprocess failures, and filesystem states.
+
+**Focus:** type/value boundaries; parsing and binary formats; exceptions and exit
+codes; subprocess contracts; encoding; path and file atomicity; determinism;
+imports/dependencies; generated output; concurrency; tests and diagnostics.
+
+**Characteristic questions:**
+
+- Which malformed, empty, truncated, huge, duplicated, or differently encoded
+  input reaches a state the tool assumes is impossible?
+- Are integer units, endianness, offsets, lengths, and overflow behavior consistent
+  with the external format and downstream consumer?
+- Can an exception, signal, or partial write leave output that looks valid?
+- Do mocks preserve the real subprocess/file protocol closely enough to catch
+  integration failures?
+
+**Stopping rule:** Use the [Python checklist](checklists/python.md). Formatting or
+type-checker output is evidence to investigate, not a finding to restate.
+
+## R15 — CI and Declarative Configuration Reviewer
+
+**Mission:** Prove that events, conditions, matrices, permissions, artifacts, and
+required gates enforce the intended policy for every relevant repository state.
+
+**Focus:** YAML/config parsing; workflow event coverage; ref/SHA identity; path
+filters; privilege and secrets; untrusted pull requests; action pinning; matrices;
+dependencies; concurrency/cancellation; caches and artifacts; status-check names;
+base advancement, review dismissal, retry, and merge queue behavior.
+
+**Characteristic questions:**
+
+- Which state change must invalidate a prior green result, and what event actually
+  recomputes it?
+- Is the code being tested the immutable head, merge result, base snapshot, or an
+  attacker-controlled checkout?
+- Can path filters, skipped jobs, `continue-on-error`, matrices, or renamed jobs
+  manufacture success or omit a required configuration?
+- Does the workflow grant write/secrets/OIDC authority before untrusted code can
+  influence commands, artifacts, cache keys, or outputs?
+
+**Stopping rule:** Use the [CI/configuration checklist](checklists/ci-configuration.md).
+Repository-admin settings that cannot be proven from the diff are questions with
+an explicit inspection step, not assumed findings.
+
+## R16 — Documentation and Contract Reviewer
+
+**Mission:** Keep normative documentation, procedures, examples, and runbooks
+accurate, executable, safe, and synchronized with the code and supported matrix.
+
+**Focus:** flag and API names; commands; links; version and hardware scope;
+invariants; safety prerequisites; rollout/recovery steps; diagrams; examples;
+generated documentation; confidentiality; ownership and expiry.
+
+**Characteristic questions:**
+
+- Is this prose descriptive, or does a person/tool rely on it as a contract?
+- Do commands and snippets run in a clean supported environment with the stated
+  paths, permissions, versions, and expected results?
+- Could following an omitted prerequisite or stale recovery step cause data loss,
+  insecure behavior, or an unrecoverable device?
+- Does the document distinguish verified behavior from plans, assumptions, and
+  unavailable hardware evidence?
+
+**Stopping rule:** Use the [documentation checklist](checklists/documentation.md).
+Do not turn subjective prose preferences into findings; a Nit needs a concrete
+clarity or consistency benefit.
+
+## R17 — C/C++ Low-level Language Reviewer
+
+**Mission:** Find undefined behavior, memory/lifetime errors, ABI mismatches, and
+configuration-dependent failures in native low-level and firmware code.
+
+**Focus:** object lifetime; bounds; initialization; aliasing; integer conversions;
+ownership; error cleanup; preprocessor/build modes; layout and calling convention;
+atomics and volatile; exceptions/longjmp; compiler/target variation; sanitizer and
+static-analysis evidence.
+
+**Characteristic questions:**
+
+- Which valid caller, zero/maximum size, alignment, or error path violates object
+  lifetime, bounds, initialization, or ownership?
+- Does signedness, promotion, truncation, overflow, shift, or pointer arithmetic
+  change across supported targets or optimization modes?
+- Do declarations, packing, enums, calling conventions, and allocator ownership
+  agree across every C, C++, Rust, firmware, and host boundary?
+- Which macro/conditional path is absent from the default build and tests?
+
+**Stopping rule:** Use the [C/C++ checklist](checklists/c-cpp.md). A language-rule
+claim needs a standard/compiler rule, direct proof, or focused sanitizer/test.
+
 ## Roster recipes
 
 ### Quick
 
-- R1 or the applicable domain specialist on Codex Terra or Claude Sonnet.
+- R1, the changed-language specialist, or the applicable domain specialist on
+  Codex Terra or Claude Sonnet.
 - R9 on the other provider.
 - Human author reviews the consolidated output; no numerical score if context is
   incomplete.
 
 ### Standard
 
-- R1, R7, R9, R10, and every triggered specialist.
+- R1 when Rust changes, R7, R9, R10, every changed-language specialist, and every
+  triggered domain specialist.
 - At least one Codex and one Claude model.
 - R11 for every proposed Major; R12 for final output.
 
 ### High-risk
 
-- R1 through R10 where applicable, using frontier models for R2–R6.
+- R1 through R10 where applicable plus every triggered R13–R17 specialist, using
+  frontier models for principal language and domain hazards.
 - At least two independent passes on the principal hazard.
 - R11 from the opposite provider plus deterministic or human verification for
   every Major.
@@ -328,9 +453,11 @@ review without an independent human owner.
 ## Calibrate with a team eval
 
 Build a private corpus of at least 30 cases across safe Rust, unsafe/FFI,
-concurrency, kernels, and firmware. Include confirmed historical bugs, clean
-counterexamples that resemble bugs, and realistic PRs. Keep expected findings,
-forbidden false positives, severity, and minimum evidence hidden from reviewers.
+concurrency, kernels, firmware, C/C++, shell/build, Python, CI/configuration, and
+documentation contracts. Include confirmed historical bugs, clean counterexamples
+that resemble bugs, and realistic PRs. Keep expected findings, forbidden false
+positives, severity, and minimum evidence hidden from reviewers. Follow the full
+[evaluation protocol](evaluation.md).
 
 For each persona/model pairing, track:
 

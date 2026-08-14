@@ -85,6 +85,12 @@ Applied caps and gates:
 | --- | --- | --- | --- | --- |
 | | | | | |
 
+### Language and file-class coverage
+
+| Changed class/language | Risk-bearing behavior | Required specialist | Pass/evidence | Status or explicit exception |
+| --- | --- | --- | --- | --- |
+| | | | | complete/missing/not applicable |
+
 ### Checks and evidence
 
 | Check | Exact command/configuration | Target/hardware | Result/artifact |
@@ -108,6 +114,7 @@ Applied caps and gates:
 - Untested target/feature/hardware:
 - Missing specification/context:
 - Tool/model limitation:
+- Missing language/file-class or second-provider pass:
 - Residual risk and owner:
 
 ## Follow-up and re-review plan

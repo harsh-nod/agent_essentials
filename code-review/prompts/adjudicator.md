@@ -28,33 +28,36 @@ record the coverage gap.
 
 1. Read the diff and surrounding source yourself. Spot-check every candidate
    against the frozen target; reviewer prose is not evidence by itself.
-2. Normalize severity, confidence, category, locations, and evidence to the common
+2. Compare the changed-language/file-class inventory with the execution manifest.
+   If a material executable or normative class lacks its required specialist, mark
+   the affected category `Unscored` and keep the review provisional.
+3. Normalize severity, confidence, category, locations, and evidence to the common
    schema. A candidate lacking mechanism, reachable trigger, impact, or a decisive
    validation step is a question, not a confirmed finding.
-3. Remove issues not introduced or materially worsened by the PR. Preserve a
+4. Remove issues not introduced or materially worsened by the PR. Preserve a
    separate pre-existing follow-up only if it changes safe rollout or validation.
-4. Deduplicate by root cause, not wording. Merge affected locations and evidence.
+5. Deduplicate by root cause, not wording. Merge affected locations and evidence.
    Do not merge distinct mechanisms merely because they touch the same line.
-5. For every Major, disputed Minor, unsafe/FFI soundness claim, memory-order claim,
+6. For every Major, disputed Minor, unsafe/FFI soundness claim, memory-order claim,
    hardware-contract claim, security claim, firmware recovery claim, or numerical
    correctness claim, examine the independent challenge. If none exists, classify
    it as `verification required` and do not present a medium-confidence Major as
    confirmed.
-6. Resolve conflicts by this precedence: reproducer/tool/hardware evidence;
+7. Resolve conflicts by this precedence: reproducer/tool/hardware evidence;
    authoritative specification; owned repository invariant; direct code/invariant
    analysis; stated expert judgment. Never decide by model/provider vote.
-7. Return each candidate as `confirmed`, `downgraded`, `question`, or `rejected`,
+8. Return each candidate as `confirmed`, `downgraded`, `question`, or `rejected`,
    with a one-sentence rationale. Publish only confirmed high-confidence findings
    and adjudicated medium-confidence Minors. Keep low-confidence ideas as questions.
-8. Recalibrate all findings to Major, Minor, or Nit using the supplied rubric. Cap
+9. Recalibrate all findings to Major, Minor, or Nit using the supplied rubric. Cap
    published Nits at five and group repeated instances.
-9. Score each applicable category from 0–10 based on confirmed findings and actual
+10. Score each applicable category from 0–10 based on confirmed findings and actual
    evidence. Mark a category `Unscored`, not `N/A`, if needed context is missing.
-10. Compute the weighted overall score, apply every non-averaging cap, and state the
+11. Compute the weighted overall score, apply every non-averaging cap, and state the
     arithmetic. Do not issue a final score if a material category is Unscored.
-11. Set the decision: `Approve`, `Approve with follow-ups`, `Request changes`, or
+12. Set the decision: `Approve`, `Approve with follow-ups`, `Request changes`, or
     `Provisional — evidence required`. Any confirmed Major means Request changes.
-12. Fill the supplied report template. Keep findings concise and actionable; the
+13. Fill the supplied report template. Keep findings concise and actionable; the
     report is not a transcript of agent debate.
 
 ## Finding publication rules

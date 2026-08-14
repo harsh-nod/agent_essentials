@@ -66,6 +66,13 @@ not decide based on multiple agents agreeing. Deduplicate by root cause.
 - Architecture/quality: invariant ownership, dependency direction, state model,
   API/ABI/protocol compatibility, failure containment, rollback, observability,
   representative tests, and measured performance/resource claims.
+- Changed-language semantics: apply a dedicated C/C++, shell/build, Python,
+  CI/configuration, or documentation-contract pass for each applicable changed
+  file class. Inspect embedded scripts in their actual interpreter as well as the
+  containing YAML/configuration.
+- Tool boundaries: verify arguments, environment, working directory, exit status,
+  stdout/stderr protocol, filenames, partial failure, stale artifacts, and the real
+  producer/consumer output shape across every new build mode.
 
 ## Repository-specific invariants
 
