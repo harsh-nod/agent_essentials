@@ -31,6 +31,12 @@ adapter, and leave target-only compilation to CI. A passing compile, digest gate
 or one-time binary comparison must not be accepted as evidence that future drift
 is detected.
 
+For policy-checker cases, include semantic mutations that must fail, cosmetic
+comment/string edits that must pass, CLI input/error cases, and removal of the
+checker plus its invocation and tests. Include a Rust macro case where call-site
+shadowing or caller-supplied control flow weakens an invariant, and an artifact
+case where relative equality holds but an absolute digest is producer-dependent.
+
 ## Measurements
 
 Track by persona, model/provider/version/effort, language, and risk lane:

@@ -63,6 +63,9 @@ settings through read-only APIs when they affect enforcement; do not infer them.
 - [ ] Required status checks, strict/up-to-date policy, approvals, stale-review
       dismissal, and merge-queue behavior collectively enforce the stated gate.
       File changes alone cannot prove repository-admin configuration.
+- [ ] A branch-controlled policy checker cannot silently disappear with its own
+      invocation and tests. Prefer a trusted-base checker or an independently
+      enforced digest/manifest, and make an unexpected test-count drop visible.
 
 ## Configuration lifecycle
 
@@ -89,3 +92,12 @@ settings through read-only APIs when they affect enforcement; do not infer them.
       duplicated target state machine.
 - [ ] Test embedded scripts separately and end-to-end with realistic outputs,
       artifacts, permissions, and failure states.
+- [ ] Exercise the exact checker CLI that CI invokes, including exit status,
+      stdout/stderr, missing and malformed inputs, encoding errors, and diagnostic
+      stability. Direct helper calls are not a substitute for the process contract.
+- [ ] Pair adversarial semantic mutations with cosmetic controls in comments,
+      strings, whitespace, and unrelated code. A source scanner that rejects prose
+      or valid unrelated syntax is a gate defect even when it catches the seeded bug.
+- [ ] For artifact-equality claims, reproduce both sides in the same recorded
+      producer environment. Treat relative byte equality separately from an
+      absolute size/digest that may depend on archive tools or metadata.

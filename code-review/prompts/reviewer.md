@@ -65,6 +65,10 @@ scope. Be adversarial toward assumptions, never toward the author.
    Compare the documented developer command with CI-only commands whenever the
    diff creates target- or feature-specific code; report which reachable bodies
    a developer can leave uncompiled before pushing.
+   For a new policy/source checker, run the real CLI and pair a semantic mutation
+   with comment/string/whitespace controls. Test whether deleting the checker,
+   invocation, and tests is independently detected. For macros, probe call-site
+   name shadowing and whether callers can weaken invariant-bearing control flow.
 7. Deduplicate symptoms from the same root cause. Include all affected sites under
    one finding.
 8. Assign severity and confidence using `severity-and-scoring.md`. A Major requires

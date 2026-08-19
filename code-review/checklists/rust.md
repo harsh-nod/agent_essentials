@@ -255,6 +255,15 @@ safe caller, not only for current call sites.
       supply-chain code.
 - [ ] Target and feature cfg names are spelled/checked; fallback branches do not
       silently select a wrong architecture.
+- [ ] Exported or cross-module macros keep invariant-bearing ordering, negation,
+      tags, and branch selection inside the macro when possible; callers should not
+      be able to type-check a weaker protocol by supplying control-flow blocks.
+- [ ] Macro-owned Rust types, variants, functions, and constants use `$crate::` or
+      another intentional absolute path. Test plausible call-site shadowing rather
+      than assuming identifiers resolve where the macro is defined.
+- [ ] Text/digest equivalence explicitly includes name resolution, trait
+      implementations, and cfg-selected type definitions in its trusted boundary;
+      identical tokens alone do not establish identical Rust semantics.
 - [ ] MSRV and edition changes are intentional; public docs/tests compile at MSRV
       where required.
 - [ ] New dependencies justify functionality, maintenance, license, provenance,

@@ -30,6 +30,12 @@ review; normative procedures and safety contracts are executable interfaces.
 - [ ] Proof counts and verification tables distinguish executable refinement,
       structural datatype lemmas, assumptions, and unverified adapters; aggregate
       counts do not imply behavioral coverage they do not provide.
+- [ ] Source-text, AST, digest, binary, differential, and formal-equivalence claims
+      name the actual mechanism and its trust boundary. Do not relabel a golden-text
+      pin as semantic or executable refinement.
+- [ ] Absolute artifact sizes and digests record the producing host/toolchain/tool
+      envelope; relative base/head identity remains a separate claim when the
+      absolute bytes are environment-sensitive.
 
 ## Commands, examples, and procedures
 
