@@ -25,6 +25,12 @@ as a filename—add both the buggy case and a corrected counterexample. The eval
 must prove that the responsible reviewer finds the mechanism from the diff rather
 than parroting a bug description.
 
+For cfg-split or formal-verification cases, include mutations that independently
+change one target body, preserve a tautological lemma while breaking the real
+adapter, and leave target-only compilation to CI. A passing compile, digest gate,
+or one-time binary comparison must not be accepted as evidence that future drift
+is detected.
+
 ## Measurements
 
 Track by persona, model/provider/version/effort, language, and risk lane:

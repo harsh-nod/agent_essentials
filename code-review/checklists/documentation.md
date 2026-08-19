@@ -27,6 +27,9 @@ review; normative procedures and safety contracts are executable interfaces.
       rollback, and trust/privilege boundaries.
 - [ ] Links and anchors resolve to stable authoritative targets; version-specific
       claims do not use an unversioned moving page without reason.
+- [ ] Proof counts and verification tables distinguish executable refinement,
+      structural datatype lemmas, assumptions, and unverified adapters; aggregate
+      counts do not imply behavioral coverage they do not provide.
 
 ## Commands, examples, and procedures
 
@@ -34,6 +37,8 @@ review; normative procedures and safety contracts are executable interfaces.
       required environment/credentials, target, expected output, and cleanup.
 - [ ] Snippets run or compile in a clean supported environment, or are clearly
       marked pseudocode with non-copyable placeholders.
+- [ ] The documented pre-push command covers newly introduced target and feature
+      bodies, or explicitly states which configurations are compiled only in CI.
 - [ ] Examples cover important error/rollback behavior and do not normalize an
       insecure, deprecated, destructive, or unsupported shortcut.
 - [ ] Multi-step procedures define checkpoints, idempotency, partial failure,

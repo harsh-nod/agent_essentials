@@ -1,0 +1,20 @@
+{
+  "buggy_findings": [
+    {
+      "category": "Testing and verifiability",
+      "mechanism": "The PR creates independent host and target state-machine bodies, but only the host body is executed or proved.",
+      "decisive_mutation": "Remove or reorder the target-only Busy guard and require a non-digest behavioral gate to fail."
+    },
+    {
+      "category": "Testing and verifiability",
+      "mechanism": "The counted lemma only unfolds a datatype definition, while the executable protocol adapter is outside verification.",
+      "decisive_mutation": "Break the adapter while holding the specification fixed and require a proof obligation to fail."
+    },
+    {
+      "category": "Maintainability and documentation",
+      "mechanism": "The documented developer command cannot compile the newly introduced target-only source before CI.",
+      "decisive_mutation": "Introduce a target-only type error and confirm the documented command catches it."
+    }
+  ],
+  "fixed_expected_findings": 0
+}

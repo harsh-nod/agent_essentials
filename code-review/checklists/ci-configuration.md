@@ -48,6 +48,10 @@ settings through read-only APIs when they affect enforcement; do not infer them.
 
 - [ ] Matrix dimensions cover supported targets/features/hardware and exclusions are
       deliberate; fail-fast and continue-on-error do not hide a required failure.
+- [ ] When a PR adds target/feature-specific source, compare the documented local
+      validation command with CI. Either the documented command compiles the new
+      body or the documentation clearly identifies the CI-only prerequisite and
+      the delayed-feedback risk.
 - [ ] `needs`, conditions, output propagation, retries, timeouts, and cancellation
       preserve failure and do not run release/deploy/sign after an upstream failure.
 - [ ] Concurrency groups prevent conflicting publication without letting an attacker
@@ -80,5 +84,8 @@ settings through read-only APIs when they affect enforcement; do not infer them.
       merge queue.
 - [ ] Inspect live repository rules/settings when enforcement is claimed and record
       exact read-only evidence and date; distinguish code fixes from admin changes.
+- [ ] Trace each changed source body to the job that compiles, executes, or proves
+      it. A green host test plus a target compile is not behavioral coverage of a
+      duplicated target state machine.
 - [ ] Test embedded scripts separately and end-to-end with realistic outputs,
       artifacts, permissions, and failure states.

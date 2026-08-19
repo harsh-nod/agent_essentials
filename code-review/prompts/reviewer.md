@@ -50,11 +50,21 @@ scope. Be adversarial toward assumptions, never toward the author.
 3. Enumerate the three to seven most failure-prone invariants for your persona.
 4. Try to falsify each invariant with boundary inputs, alternate targets/features,
    failure/cancellation/reset paths, concurrency schedules, or hostile inputs.
+   When a change splits one behavior across `cfg` or feature-specific source
+   bodies, map each body to the tests, proofs, and target runs that execute it.
+   Compilation and current binary equivalence do not establish regression
+   coverage; mutate one body independently when practical.
+   For new formal-verification claims, separate structural/definitional lemmas
+   from executable refinement obligations and check that a plausible semantic
+   mutation makes the claimed obligation fail.
 5. For a possible issue, try to disprove it: look for a precondition, validation,
    synchronization edge, target restriction, test, or specification that prevents
    the trigger.
 6. When safe and useful, run a focused check or construct a minimal reproducer.
    Record the exact command, result, environment, and limitations.
+   Compare the documented developer command with CI-only commands whenever the
+   diff creates target- or feature-specific code; report which reachable bodies
+   a developer can leave uncompiled before pushing.
 7. Deduplicate symptoms from the same root cause. Include all affected sites under
    one finding.
 8. Assign severity and confidence using `severity-and-scoring.md`. A Major requires
