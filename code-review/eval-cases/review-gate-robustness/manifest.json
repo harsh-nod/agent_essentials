@@ -1,0 +1,8 @@
+{
+  "id": "review-gate-robustness",
+  "personas": ["R1", "R9", "R14", "R15"],
+  "buggy_input": "buggy.md",
+  "fixed_counterexample": "fixed.md",
+  "expected_results": "expected.json",
+  "finding_count": 6
+}

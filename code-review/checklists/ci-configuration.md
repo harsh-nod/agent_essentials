@@ -48,6 +48,10 @@ settings through read-only APIs when they affect enforcement; do not infer them.
 
 - [ ] Matrix dimensions cover supported targets/features/hardware and exclusions are
       deliberate; fail-fast and continue-on-error do not hide a required failure.
+- [ ] When a PR adds target/feature-specific source, compare the documented local
+      validation command with CI. Either the documented command compiles the new
+      body or the documentation clearly identifies the CI-only prerequisite and
+      the delayed-feedback risk.
 - [ ] `needs`, conditions, output propagation, retries, timeouts, and cancellation
       preserve failure and do not run release/deploy/sign after an upstream failure.
 - [ ] Concurrency groups prevent conflicting publication without letting an attacker
@@ -59,6 +63,9 @@ settings through read-only APIs when they affect enforcement; do not infer them.
 - [ ] Required status checks, strict/up-to-date policy, approvals, stale-review
       dismissal, and merge-queue behavior collectively enforce the stated gate.
       File changes alone cannot prove repository-admin configuration.
+- [ ] A branch-controlled policy checker cannot silently disappear with its own
+      invocation and tests. Prefer a trusted-base checker or an independently
+      enforced digest/manifest, and make an unexpected test-count drop visible.
 
 ## Configuration lifecycle
 
@@ -80,5 +87,27 @@ settings through read-only APIs when they affect enforcement; do not infer them.
       merge queue.
 - [ ] Inspect live repository rules/settings when enforcement is claimed and record
       exact read-only evidence and date; distinguish code fixes from admin changes.
+- [ ] Trace each changed source body to the job that compiles, executes, or proves
+      it. A green host test plus a target compile is not behavioral coverage of a
+      duplicated target state machine.
 - [ ] Test embedded scripts separately and end-to-end with realistic outputs,
       artifacts, permissions, and failure states.
+- [ ] Exercise the exact checker CLI that CI invokes, including exit status,
+      stdout/stderr, missing and malformed inputs, encoding errors, and diagnostic
+      stability. Direct helper calls are not a substitute for the process contract.
+- [ ] Pair adversarial semantic mutations with cosmetic controls in comments,
+      strings, whitespace, and unrelated code. A source scanner that rejects prose
+      or valid unrelated syntax is a gate defect even when it catches the seeded bug.
+- [ ] For artifact-equality claims, reproduce both sides in the same recorded
+      producer environment. Treat relative byte equality separately from an
+      absolute size/digest that may depend on archive tools or metadata.
+- [ ] Bind artifact-comparison inputs to distinct base and candidate build
+      provenance. Reject the same resolved path or inode in both roles where
+      possible; comparing the base artifact with itself is not qualification.
+- [ ] Do not hardcode a producer-layout-dependent archive digest as the admission
+      criterion for independent qualification. Recompute each supplied digest and
+      require the base/candidate relation; separately record the reference host,
+      sysroot/path remapping, toolchain, and absolute digest as descriptive evidence.
+- [ ] A required command-presence test reasons about the effective script, not raw
+      prose. Prefix the command with a shell comment or make it unreachable and
+      require the enforcement test to fail.

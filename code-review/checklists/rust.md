@@ -242,12 +242,28 @@ safe caller, not only for current call sites.
 - [ ] Review the effective code under each meaningful feature/cfg combination, not
       only the default; additive Cargo feature unification cannot create an invalid
       combination.
+- [ ] If one semantic operation has separate target/feature implementations, map
+      every source body to a test, proof, differential check, or shared executable
+      definition that detects independent drift. A compile-only target job and a
+      one-time identical binary comparison do not test future behavior.
+- [ ] Mutation-test duplicated cfg branches when practical: remove or reorder one
+      guard in only one branch and confirm a deterministic gate fails without
+      refreshing source-digest allowlists as the sole response.
 - [ ] Mutually exclusive backends/features fail clearly or compose correctly.
 - [ ] `build.rs`, proc macros, generated bindings, link scripts, and environment-
       derived configuration are deterministic, scoped, and reviewed as executable
       supply-chain code.
 - [ ] Target and feature cfg names are spelled/checked; fallback branches do not
       silently select a wrong architecture.
+- [ ] Exported or cross-module macros keep invariant-bearing ordering, negation,
+      tags, and branch selection inside the macro when possible; callers should not
+      be able to type-check a weaker protocol by supplying control-flow blocks.
+- [ ] Macro-owned Rust types, variants, functions, and constants use `$crate::` or
+      another intentional absolute path. Test plausible call-site shadowing rather
+      than assuming identifiers resolve where the macro is defined.
+- [ ] Text/digest equivalence explicitly includes name resolution, trait
+      implementations, and cfg-selected type definitions in its trusted boundary;
+      identical tokens alone do not establish identical Rust semantics.
 - [ ] MSRV and edition changes are intentional; public docs/tests compile at MSRV
       where required.
 - [ ] New dependencies justify functionality, maintenance, license, provenance,
@@ -257,9 +273,51 @@ safe caller, not only for current call sites.
 - [ ] Lockfile/checksum/source changes match the manifest and policy; git/path
       dependencies are pinned and reproducible where required.
 
+## Formal verification
+
+- [ ] Inventory every new theorem, postcondition, refinement function, trusted
+      declaration, and proof-excluded executable function; identify which runtime
+      decision each obligation constrains.
+- [ ] Distinguish structural or definitional lemmas from falsifiable executable
+      refinement. A theorem that unfolds a datatype projection is useful type
+      documentation but is not behavioral coverage of a protocol adapter.
+- [ ] Keep the specification independent enough to detect implementation drift;
+      do not count two functions generated from the same body as independent
+      evidence unless a separate contract constrains their result.
+- [ ] Search for verified consumers of new postconditions. An executable helper
+      with a correct postcondition does not verify an unconnected caller that maps
+      its result into errors, updates, effects, or hardware actions.
+- [ ] Build a consumer map for each material `requires`/`ensures` clause. Delete or
+      narrow one clause at a time while holding the implementation fixed; if no
+      verified caller fails, aggregate obligation counts cannot support a claim
+      that the clause protects downstream behavior. Require an explicit contract
+      inventory/gate or narrow the claim.
+- [ ] Apply a plausible semantic mutation while holding the specification fixed,
+      and a specification mutation while holding the implementation fixed. Record
+      which proof or gate fails; if neither fails, narrow the claim.
+- [ ] When an implementation and its `spec fn` repeat the same match/table, treat
+      the spec as a review oracle rather than external conformance. Try a coordinated
+      implementation-plus-spec mutation and identify the independent source, model,
+      golden vector, or hardware evidence that still rejects it.
+- [ ] For typed-to-integer/wire bridges, prove both directions needed by the claim:
+      accepted rows are in the typed code image, observable encodings are injective
+      where distinct values matter, and no extra legacy/wire row is accepted merely
+      because forward refinement quantifies only over typed inputs.
+- [ ] Treat `external_body`, assumptions, opaque/external type models, admitted
+      axioms, and proof-disabled cfg branches as explicit trust boundaries rather
+      than verified implementation.
+
 ## Tests and tools
 
 Choose applicable commands; record exact toolchain, target, features, and results.
+
+- [ ] Run tests for each materially distinct Cargo feature body directly. A
+      workspace test can feature-unify a crate onto its default/proof-enabled body;
+      `cargo check --no-default-features` compiles but does not behaviorally execute
+      the separate proof-free implementation.
+- [ ] Check that a public type alias/function exposes nameable public component
+      types to downstream callers. Otherwise make the adapter crate-private or
+      expose a coherent public matching API.
 Do not claim coverage from a tool that cannot execute the hardware/FFI path.
 
 - [ ] Format and compile: `cargo fmt --all -- --check`, then `cargo check`/`build`

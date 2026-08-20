@@ -50,11 +50,38 @@ scope. Be adversarial toward assumptions, never toward the author.
 3. Enumerate the three to seven most failure-prone invariants for your persona.
 4. Try to falsify each invariant with boundary inputs, alternate targets/features,
    failure/cancellation/reset paths, concurrency schedules, or hostile inputs.
+   When a change splits one behavior across `cfg` or feature-specific source
+   bodies, map each body to the tests, proofs, and target runs that execute it.
+   Compilation and current binary equivalence do not establish regression
+   coverage; mutate one body independently when practical.
+   For new formal-verification claims, separate structural/definitional lemmas
+   from executable refinement obligations and check that a plausible semantic
+   mutation makes the claimed obligation fail.
+   Map every material postcondition to a verified consumer, then delete or narrow
+   a clause while holding the implementation fixed. An unchanged proof count is
+   not evidence that an unconsumed clause protects callers. For encoding bridges,
+   probe extra accepted rows outside the typed image and collisions between
+   observable codes. For a copied implementation/spec table, mutate both together
+   and identify what independent oracle still rejects the change.
 5. For a possible issue, try to disprove it: look for a precondition, validation,
    synchronization edge, target restriction, test, or specification that prevents
    the trigger.
 6. When safe and useful, run a focused check or construct a minimal reproducer.
    Record the exact command, result, environment, and limitations.
+   Compare the documented developer command with CI-only commands whenever the
+   diff creates target- or feature-specific code; report which reachable bodies
+   a developer can leave uncompiled before pushing.
+   For a new policy/source checker, run the real CLI and pair a semantic mutation
+   with comment/string/whitespace controls. Test whether deleting the checker,
+   invocation, and tests is independently detected. For macros, probe call-site
+   name shadowing and whether callers can weaken invariant-bearing control flow.
+   For artifact comparisons, try supplying the same path or inode as both base
+   and candidate and require independent build provenance for the two roles.
+   Rebuild under a different HOME/sysroot/source-path layout before treating an
+   absolute archive digest as portable. For shell enforcement, comment out the
+   required command and check whether raw-text tests remain green; for Cargo,
+   verify that feature-unified workspace tests do not hide a distinct no-default
+   executable body.
 7. Deduplicate symptoms from the same root cause. Include all affected sites under
    one finding.
 8. Assign severity and confidence using `severity-and-scoring.md`. A Major requires

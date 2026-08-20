@@ -1,0 +1,35 @@
+{
+  "buggy_findings": [
+    {
+      "category": "Testing and verifiability",
+      "mechanism": "The checker scans raw source as well as masked tokens, so harmless keywords in comments fail CI.",
+      "decisive_mutation": "Add comment-only include and macro_rules text and require the checker to keep passing."
+    },
+    {
+      "category": "Testing and verifiability",
+      "mechanism": "Tests call validate directly but never exercise the CLI exit status, streams, file reads, or malformed inputs used by CI.",
+      "decisive_mutation": "Invoke the real checker process with valid, missing, invalid UTF-8, and semantically mutated inputs."
+    },
+    {
+      "category": "Testing and verifiability",
+      "mechanism": "The direct-attribute parser counts brackets inside Rust attribute strings, so an earlier false cfg can be hidden behind a doc string and erase an unreferenced proof while the gate passes.",
+      "decisive_mutation": "Prepend cfg(any()) plus cfg_attr with a doc string containing a closing bracket to a required proof, rebind reviewed digests, and require the checker to reject the proof-erasing source."
+    },
+    {
+      "category": "Architecture and compatibility",
+      "mechanism": "The branch can delete the checker, its invocation, and its tests without an independent trusted-base or digest gate detecting removal.",
+      "decisive_mutation": "Delete the complete enforcement chain and require an independent check or manifest to fail."
+    },
+    {
+      "category": "Functional correctness",
+      "mechanism": "The exported macro leaves invariant-bearing branch order to callers and resolves unqualified Rust types in the expansion context.",
+      "decisive_mutation": "Supply a non-diverging rejection block or shadow a payload type at the call site and require compilation or a structural gate to reject it."
+    },
+    {
+      "category": "Maintainability and documentation",
+      "mechanism": "The document treats an environment-sensitive absolute archive digest as reproducible evidence without recording the producing tool envelope, and the checker permits one artifact to fill both comparison roles.",
+      "decisive_mutation": "Rebuild base and head together under a second archive tool environment, distinguish relative equality from the absolute digest, and pass the same path or inode for both roles."
+    }
+  ],
+  "fixed_expected_findings": 0
+}

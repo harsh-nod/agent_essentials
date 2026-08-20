@@ -1,0 +1,8 @@
+{
+  "id": "cfg-split-proof-coverage",
+  "personas": ["R1", "R5", "R9", "R15", "R16"],
+  "buggy_input": "buggy.md",
+  "fixed_counterexample": "fixed.md",
+  "expected_results": "expected.json",
+  "finding_count": 3
+}

@@ -27,6 +27,23 @@ review; normative procedures and safety contracts are executable interfaces.
       rollback, and trust/privilege boundaries.
 - [ ] Links and anchors resolve to stable authoritative targets; version-specific
       claims do not use an unversioned moving page without reason.
+- [ ] Proof counts and verification tables distinguish executable refinement,
+      structural datatype lemmas, assumptions, and unverified adapters; aggregate
+      counts do not imply behavioral coverage they do not provide.
+- [ ] Source-text, AST, digest, binary, differential, and formal-equivalence claims
+      name the actual mechanism and its trust boundary. Do not relabel a golden-text
+      pin as semantic or executable refinement.
+- [ ] Absolute artifact sizes and digests record the producing host/toolchain/tool
+      envelope; relative base/head identity remains a separate claim when the
+      absolute bytes are environment-sensitive.
+- [ ] An implementation-shaped formal specification is labeled as an independent
+      review oracle, not external conformance. Name which observables are supported
+      by pinned source/ELF/model evidence and which table rows remain in-file review
+      assumptions.
+- [ ] Qualification roles are defined against an owner group and the exact-head
+      record names commits, artifacts, toolchain/target, attestor, invalidation on
+      push/rebase, and the stop/escalation path. Self-consistent metadata is not
+      described as authenticated provenance.
 
 ## Commands, examples, and procedures
 
@@ -34,6 +51,8 @@ review; normative procedures and safety contracts are executable interfaces.
       required environment/credentials, target, expected output, and cleanup.
 - [ ] Snippets run or compile in a clean supported environment, or are clearly
       marked pseudocode with non-copyable placeholders.
+- [ ] The documented pre-push command covers newly introduced target and feature
+      bodies, or explicitly states which configurations are compiled only in CI.
 - [ ] Examples cover important error/rollback behavior and do not normalize an
       insecure, deprecated, destructive, or unsupported shortcut.
 - [ ] Multi-step procedures define checkpoints, idempotency, partial failure,

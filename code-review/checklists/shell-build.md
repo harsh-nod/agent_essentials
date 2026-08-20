@@ -52,6 +52,10 @@ and actual downstream tools; generic lint does not prove integration behavior.
 
 - [ ] Every artifact has a deterministic identity tied to source SHA, target,
       configuration, toolchain, and current invocation.
+- [ ] Inspect archives/binaries for embedded absolute source, sysroot, HOME, and
+      target-directory paths before presenting one SHA as portable. Use reviewed
+      path remapping when reproducibility is required, or explicitly qualify only
+      same-environment base/head equality.
 - [ ] Output directories are unique or cleaned safely; success checks cannot accept
       an older artifact after the current compiler/linker/package step failed.
 - [ ] Temporary output is created safely and promoted atomically only after full
@@ -106,3 +110,9 @@ and actual downstream tools; generic lint does not prove integration behavior.
       concurrent invocations, signal interruption, and downstream rejection.
 - [ ] Compare artifact hashes/layout/manifests and package inputs across all selected
       backends/configurations; record exact tools and versions.
+- [ ] Tests that require a command to remain in a gate parse active shell commands;
+      a commented-out, unreachable, or quoted occurrence must not satisfy a raw
+      substring assertion.
+- [ ] When Cargo feature-specific bodies matter, invoke the crate-specific test
+      command before a workspace test can feature-unify it onto defaults. Verify the
+      exact active command in both normal and fast/developer gates.
