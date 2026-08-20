@@ -4,5 +4,5 @@
   "buggy_input": "buggy.md",
   "fixed_counterexample": "fixed.md",
   "expected_results": "expected.json",
-  "finding_count": 5
+  "finding_count": 6
 }

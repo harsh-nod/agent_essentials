@@ -11,6 +11,11 @@
       "decisive_mutation": "Invoke the real checker process with valid, missing, invalid UTF-8, and semantically mutated inputs."
     },
     {
+      "category": "Testing and verifiability",
+      "mechanism": "The direct-attribute parser counts brackets inside Rust attribute strings, so an earlier false cfg can be hidden behind a doc string and erase an unreferenced proof while the gate passes.",
+      "decisive_mutation": "Prepend cfg(any()) plus cfg_attr with a doc string containing a closing bracket to a required proof, rebind reviewed digests, and require the checker to reject the proof-erasing source."
+    },
+    {
       "category": "Architecture and compatibility",
       "mechanism": "The branch can delete the checker, its invocation, and its tests without an independent trusted-base or digest gate detecting removal.",
       "decisive_mutation": "Delete the complete enforcement chain and require an independent check or manifest to fail."

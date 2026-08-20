@@ -10,6 +10,19 @@ identifier" fails. No test invokes `check-routing.py` as a process. Deleting the
 checker, its shell invocation, and its unit test reduces the test count but does
 not fail another policy gate.
 
+Its direct-attribute parser masks comments but counts brackets inside string
+literals. This valid Rust sequence hides the first attribute from the checker
+while Rust applies it and removes the proof:
+
+```rust
+#[cfg(any())]
+#[cfg_attr(any(), doc = "]")]
+pub proof fn required_bridge() { }
+```
+
+The bridge is not called by executable tests, and the proof runner checks only
+its exit status rather than the required proof inventory.
+
 The checked Rust helper exports this macro:
 
 ```rust

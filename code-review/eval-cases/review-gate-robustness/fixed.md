@@ -6,6 +6,12 @@ CLI and assert success/failure exit codes, stderr diagnostics, missing files, an
 invalid UTF-8 behavior. A trusted-base workflow or digest-bound manifest detects
 removal of the checker, its invocation, or its tests.
 
+Direct-attribute delimiter matching uses a length-preserving view with Rust
+strings, raw strings, byte strings, and character literals masked, while exact
+attribute comparison slices a comments-only view. A rebound-digest regression
+test applies `cfg(any())` plus `cfg_attr(any(), doc = "]")` to an otherwise
+unreferenced required proof and requires the gate to reject it.
+
 The admission macro owns the rejection order and returns a closed result code;
 callers supply only state predicates. Payload paths use `$crate::QueueState` and
 `$crate::Phase`, with a call-site shadowing regression test.

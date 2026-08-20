@@ -54,6 +54,7 @@ class EvalCaseTests(unittest.TestCase):
         mechanisms = " ".join(item["mechanism"] for item in expected["buggy_findings"])
         self.assertIn("comments fail CI", mechanisms)
         self.assertIn("never exercise the CLI", mechanisms)
+        self.assertIn("attribute strings", mechanisms)
         self.assertIn("delete the checker", mechanisms)
         self.assertIn("expansion context", mechanisms)
         self.assertIn("absolute archive digest", mechanisms)
