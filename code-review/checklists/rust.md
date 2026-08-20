@@ -287,9 +287,22 @@ safe caller, not only for current call sites.
 - [ ] Search for verified consumers of new postconditions. An executable helper
       with a correct postcondition does not verify an unconnected caller that maps
       its result into errors, updates, effects, or hardware actions.
+- [ ] Build a consumer map for each material `requires`/`ensures` clause. Delete or
+      narrow one clause at a time while holding the implementation fixed; if no
+      verified caller fails, aggregate obligation counts cannot support a claim
+      that the clause protects downstream behavior. Require an explicit contract
+      inventory/gate or narrow the claim.
 - [ ] Apply a plausible semantic mutation while holding the specification fixed,
       and a specification mutation while holding the implementation fixed. Record
       which proof or gate fails; if neither fails, narrow the claim.
+- [ ] When an implementation and its `spec fn` repeat the same match/table, treat
+      the spec as a review oracle rather than external conformance. Try a coordinated
+      implementation-plus-spec mutation and identify the independent source, model,
+      golden vector, or hardware evidence that still rejects it.
+- [ ] For typed-to-integer/wire bridges, prove both directions needed by the claim:
+      accepted rows are in the typed code image, observable encodings are injective
+      where distinct values matter, and no extra legacy/wire row is accepted merely
+      because forward refinement quantifies only over typed inputs.
 - [ ] Treat `external_body`, assumptions, opaque/external type models, admitted
       axioms, and proof-disabled cfg branches as explicit trust boundaries rather
       than verified implementation.
@@ -297,6 +310,14 @@ safe caller, not only for current call sites.
 ## Tests and tools
 
 Choose applicable commands; record exact toolchain, target, features, and results.
+
+- [ ] Run tests for each materially distinct Cargo feature body directly. A
+      workspace test can feature-unify a crate onto its default/proof-enabled body;
+      `cargo check --no-default-features` compiles but does not behaviorally execute
+      the separate proof-free implementation.
+- [ ] Check that a public type alias/function exposes nameable public component
+      types to downstream callers. Otherwise make the adapter crate-private or
+      expose a coherent public matching API.
 Do not claim coverage from a tool that cannot execute the hardware/FFI path.
 
 - [ ] Format and compile: `cargo fmt --all -- --check`, then `cargo check`/`build`

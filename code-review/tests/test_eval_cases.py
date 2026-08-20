@@ -83,6 +83,46 @@ class EvalCaseTests(unittest.TestCase):
         self.assertIn("Do not relabel a golden-text", docs_checklist)
         self.assertIn("pin as semantic", docs_checklist)
 
+    def test_proof_oracle_portability_case_is_complete(self) -> None:
+        case = ROOT / "eval-cases" / "proof-oracle-portability"
+        manifest = json.loads((case / "manifest.json").read_text(encoding="utf-8"))
+        expected = json.loads(
+            (case / manifest["expected_results"]).read_text(encoding="utf-8")
+        )
+
+        self.assertEqual(manifest["finding_count"], len(expected["buggy_findings"]))
+        self.assertEqual(expected["fixed_expected_findings"], 0)
+        self.assertTrue((case / manifest["buggy_input"]).is_file())
+        self.assertTrue((case / manifest["fixed_counterexample"]).is_file())
+
+        mechanisms = " ".join(item["mechanism"] for item in expected["buggy_findings"])
+        self.assertIn("drift in lockstep", mechanisms)
+        self.assertIn("outside the typed code image", mechanisms)
+        self.assertIn("no verified consumer", mechanisms)
+        self.assertIn("commented-out no-default command", mechanisms)
+        self.assertIn("absolute sysroot paths", mechanisms)
+
+        reviewer_prompt = (ROOT / "prompts" / "reviewer.md").read_text(
+            encoding="utf-8"
+        )
+        rust_checklist = (ROOT / "checklists" / "rust.md").read_text(
+            encoding="utf-8"
+        )
+        python_checklist = (ROOT / "checklists" / "python.md").read_text(
+            encoding="utf-8"
+        )
+        shell_checklist = (ROOT / "checklists" / "shell-build.md").read_text(
+            encoding="utf-8"
+        )
+
+        self.assertIn("Map every material postcondition", reviewer_prompt)
+        self.assertIn("extra accepted rows outside the typed image", reviewer_prompt)
+        self.assertIn("Build a consumer map", rust_checklist)
+        self.assertIn("accepted rows are in the typed code image", rust_checklist)
+        self.assertIn("Self-asserted commit", python_checklist)
+        self.assertIn("active shell commands", shell_checklist)
+        self.assertIn("embedded absolute source", shell_checklist)
+
 
 if __name__ == "__main__":
     unittest.main()

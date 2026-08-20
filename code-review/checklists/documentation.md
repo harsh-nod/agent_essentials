@@ -36,6 +36,14 @@ review; normative procedures and safety contracts are executable interfaces.
 - [ ] Absolute artifact sizes and digests record the producing host/toolchain/tool
       envelope; relative base/head identity remains a separate claim when the
       absolute bytes are environment-sensitive.
+- [ ] An implementation-shaped formal specification is labeled as an independent
+      review oracle, not external conformance. Name which observables are supported
+      by pinned source/ELF/model evidence and which table rows remain in-file review
+      assumptions.
+- [ ] Qualification roles are defined against an owner group and the exact-head
+      record names commits, artifacts, toolchain/target, attestor, invalidation on
+      push/rebase, and the stop/escalation path. Self-consistent metadata is not
+      described as authenticated provenance.
 
 ## Commands, examples, and procedures
 

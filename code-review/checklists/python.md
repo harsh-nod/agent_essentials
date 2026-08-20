@@ -80,3 +80,25 @@ hardware, security, ABI, or release artifacts.
       warnings, multiline streams, nonzero status, timeouts, and partial files.
 - [ ] Test from a clean directory, a path with spaces, alternate locale/timezone,
       randomized hash seed, and relevant platform/architecture.
+
+## Source, proof, and evidence checkers
+
+- [ ] Declaration uniqueness is counted in a comment/string-masked token view,
+      independent of line starts and formatting. Test same-line attributes,
+      declarations nested in a macro/verification block, raw identifiers, imports,
+      re-exports, and alternate cfg owners after rebinding reviewed digests.
+- [ ] A checker that pins a proof contract binds the complete live owner header,
+      attributes, bounds, and name-resolution context, not only selected body
+      substrings. Pair semantic weakening mutations with harmless formatting and
+      comment controls.
+- [ ] Evidence validation distinguishes internal consistency from provenance.
+      Self-asserted commit, clean-tree, builder, attestor, and artifact fields do
+      not authenticate a build unless checked against repository state or a trusted
+      external attestation.
+- [ ] Archive comparison makes base-to-candidate byte equality the load-bearing
+      relation. Do not require one producer-specific absolute digest from an
+      independent qualifier; recompute each supplied artifact hash, bind its role,
+      and report path/environment sensitivity separately.
+- [ ] CLI option groups are all-or-none. Supplying only provenance, only one
+      archive, or another partial qualification tuple must fail, and failures go to
+      stderr without tracebacks.

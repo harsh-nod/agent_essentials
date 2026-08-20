@@ -104,3 +104,10 @@ settings through read-only APIs when they affect enforcement; do not infer them.
 - [ ] Bind artifact-comparison inputs to distinct base and candidate build
       provenance. Reject the same resolved path or inode in both roles where
       possible; comparing the base artifact with itself is not qualification.
+- [ ] Do not hardcode a producer-layout-dependent archive digest as the admission
+      criterion for independent qualification. Recompute each supplied digest and
+      require the base/candidate relation; separately record the reference host,
+      sysroot/path remapping, toolchain, and absolute digest as descriptive evidence.
+- [ ] A required command-presence test reasons about the effective script, not raw
+      prose. Prefix the command with a shell comment or make it unreachable and
+      require the enforcement test to fail.

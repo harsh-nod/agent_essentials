@@ -37,6 +37,17 @@ checker plus its invocation and tests. Include a Rust macro case where call-site
 shadowing or caller-supplied control flow weakens an invariant, and an artifact
 case where relative equality holds but an absolute digest is producer-dependent.
 
+For proof-oracle cases, include a material postcondition with no verified consumer,
+a coordinated implementation/spec-table mutation, an integer relation with an
+accepted row outside the typed image, and a colliding observable encoding. The
+fixed case must demonstrate contract consumers or explicit structural binding,
+bidirectional image/injectivity lemmas, and partial external provenance without
+overclaiming full legacy conformance.
+
+For build-gate cases, include a required command present only in a comment, a
+workspace test that feature-unifies away the no-default body, and byte-identical
+base/head archives whose absolute digest changes with HOME/sysroot path length.
+
 ## Measurements
 
 Track by persona, model/provider/version/effort, language, and risk lane:

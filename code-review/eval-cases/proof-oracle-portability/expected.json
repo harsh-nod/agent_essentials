@@ -1,0 +1,30 @@
+{
+  "buggy_findings": [
+    {
+      "category": "Testing and verifiability",
+      "mechanism": "The copied implementation/spec table can drift in lockstep, so the proof is an in-file review oracle rather than external protocol conformance.",
+      "decisive_mutation": "Change one accepted row in both executable and spec and identify which independent source/model/ELF evidence rejects it."
+    },
+    {
+      "category": "Testing and verifiability",
+      "mechanism": "Forward typed-to-integer refinement permits extra accepted integer rows outside the typed code image and does not establish observable-code injectivity.",
+      "decisive_mutation": "Add an accepted integer row outside the encoder image and collide two acknowledgement codes; require image-completeness and injectivity proofs to fail."
+    },
+    {
+      "category": "Testing and verifiability",
+      "mechanism": "The outer frame postcondition has no verified consumer, so deleting a conjunct leaves verification and aggregate obligation counts green.",
+      "decisive_mutation": "Delete or narrow each material postcondition while holding the implementation fixed and require a consumer proof or contract-inventory gate to fail."
+    },
+    {
+      "category": "Testing and verifiability",
+      "mechanism": "A commented-out no-default command satisfies raw-text enforcement while workspace feature unification executes only the default implementation.",
+      "decisive_mutation": "Comment out the crate-specific command and inject an error only in the no-default body; require normal and fast gates to fail."
+    },
+    {
+      "category": "Architecture and compatibility",
+      "mechanism": "A hardcoded archive digest includes absolute sysroot paths, so it rejects independent qualification even when base and candidate are byte-identical together.",
+      "decisive_mutation": "Build the pair under two HOME/sysroot path lengths and separate same-environment equality from portable absolute identity."
+    }
+  ],
+  "fixed_expected_findings": 0
+}

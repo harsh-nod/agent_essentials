@@ -57,6 +57,12 @@ scope. Be adversarial toward assumptions, never toward the author.
    For new formal-verification claims, separate structural/definitional lemmas
    from executable refinement obligations and check that a plausible semantic
    mutation makes the claimed obligation fail.
+   Map every material postcondition to a verified consumer, then delete or narrow
+   a clause while holding the implementation fixed. An unchanged proof count is
+   not evidence that an unconsumed clause protects callers. For encoding bridges,
+   probe extra accepted rows outside the typed image and collisions between
+   observable codes. For a copied implementation/spec table, mutate both together
+   and identify what independent oracle still rejects the change.
 5. For a possible issue, try to disprove it: look for a precondition, validation,
    synchronization edge, target restriction, test, or specification that prevents
    the trigger.
@@ -71,6 +77,11 @@ scope. Be adversarial toward assumptions, never toward the author.
    name shadowing and whether callers can weaken invariant-bearing control flow.
    For artifact comparisons, try supplying the same path or inode as both base
    and candidate and require independent build provenance for the two roles.
+   Rebuild under a different HOME/sysroot/source-path layout before treating an
+   absolute archive digest as portable. For shell enforcement, comment out the
+   required command and check whether raw-text tests remain green; for Cargo,
+   verify that feature-unified workspace tests do not hide a distinct no-default
+   executable body.
 7. Deduplicate symptoms from the same root cause. Include all affected sites under
    one finding.
 8. Assign severity and confidence using `severity-and-scoring.md`. A Major requires
