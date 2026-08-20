@@ -57,6 +57,7 @@ class EvalCaseTests(unittest.TestCase):
         self.assertIn("delete the checker", mechanisms)
         self.assertIn("expansion context", mechanisms)
         self.assertIn("absolute archive digest", mechanisms)
+        self.assertIn("both comparison roles", mechanisms)
 
         reviewer_prompt = (ROOT / "prompts" / "reviewer.md").read_text(
             encoding="utf-8"
@@ -76,6 +77,7 @@ class EvalCaseTests(unittest.TestCase):
         self.assertIn("name shadowing", reviewer_prompt)
         self.assertIn("exact checker CLI", ci_checklist)
         self.assertIn("trusted-base checker", ci_checklist)
+        self.assertIn("same resolved path or inode", ci_checklist)
         self.assertIn("`$crate::`", rust_checklist)
         self.assertIn("Do not relabel a golden-text", docs_checklist)
         self.assertIn("pin as semantic", docs_checklist)

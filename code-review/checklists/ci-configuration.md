@@ -101,3 +101,6 @@ settings through read-only APIs when they affect enforcement; do not infer them.
 - [ ] For artifact-equality claims, reproduce both sides in the same recorded
       producer environment. Treat relative byte equality separately from an
       absolute size/digest that may depend on archive tools or metadata.
+- [ ] Bind artifact-comparison inputs to distinct base and candidate build
+      provenance. Reject the same resolved path or inode in both roles where
+      possible; comparing the base artifact with itself is not qualification.

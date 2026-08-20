@@ -12,4 +12,5 @@ callers supply only state predicates. Payload paths use `$crate::QueueState` and
 
 Qualification states base/head byte equality as the load-bearing result. Any
 absolute archive size/digest is labeled with the producing toolchain and archive
-tool environment.
+tool environment. The comparison rejects path/inode aliases and binds each input
+to its separate build provenance.

@@ -69,6 +69,8 @@ scope. Be adversarial toward assumptions, never toward the author.
    with comment/string/whitespace controls. Test whether deleting the checker,
    invocation, and tests is independently detected. For macros, probe call-site
    name shadowing and whether callers can weaken invariant-bearing control flow.
+   For artifact comparisons, try supplying the same path or inode as both base
+   and candidate and require independent build provenance for the two roles.
 7. Deduplicate symptoms from the same root cause. Include all affected sites under
    one finding.
 8. Assign severity and confidence using `severity-and-scoring.md`. A Major requires

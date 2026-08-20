@@ -22,8 +22,8 @@
     },
     {
       "category": "Maintainability and documentation",
-      "mechanism": "The document treats an environment-sensitive absolute archive digest as reproducible evidence without recording the producing tool envelope.",
-      "decisive_mutation": "Rebuild base and head together under a second archive tool environment and distinguish relative equality from the absolute digest."
+      "mechanism": "The document treats an environment-sensitive absolute archive digest as reproducible evidence without recording the producing tool envelope, and the checker permits one artifact to fill both comparison roles.",
+      "decisive_mutation": "Rebuild base and head together under a second archive tool environment, distinguish relative equality from the absolute digest, and pass the same path or inode for both roles."
     }
   ],
   "fixed_expected_findings": 0

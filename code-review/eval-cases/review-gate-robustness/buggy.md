@@ -29,4 +29,5 @@ Callers can supply a non-diverging rejection block, and `QueueState`/`Phase`
 resolve at the expansion site. The PR records one archive size and SHA-256 as a
 qualification fact, but does not record the archive tool or producer environment.
 Another host reproduces base/head byte equality while producing a different
-absolute archive digest.
+absolute archive digest. Its comparison CLI also accepts the same archive path in
+both the base and candidate roles.
