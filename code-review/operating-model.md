@@ -120,6 +120,14 @@ class, provider/model/version/effort, immutable target, status, and coverage lim
 Do not mark a pass complete merely because one model mentioned that language in a
 multi-persona prompt.
 
+For each pass, the lead also prepares an applicable hazard-to-probe manifest from
+the common prompt and specialist checklist. A pass is not complete until its
+Mandatory probe ledger records a concrete mutation/command and result for every
+applicable probe, or marks the probe `not run` with a coverage limit. In particular,
+formal contracts, source/digest gates, artifact identity, shell command enforcement,
+and normative trust-boundary documents cannot be credited from checklist wording
+alone.
+
 Do not give first-pass reviewers one another's findings. Do not ask a single agent
 to role-play five specialists in one context: later roles anchor on earlier
 reasoning, context becomes crowded, and coverage cannot be audited.

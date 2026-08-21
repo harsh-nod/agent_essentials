@@ -292,6 +292,13 @@ safe caller, not only for current call sites.
       verified caller fails, aggregate obligation counts cannot support a claim
       that the clause protects downstream behavior. Require an explicit contract
       inventory/gate or narrow the claim.
+- [ ] Treat a pinned caller as the root of a recursive trust closure, not the whole
+      closure. Enumerate executable callees, imported constructors, selectors, and
+      index calculations that determine its result; rebind intended digests and
+      mutate a callee at a nonzero/nontrivial slot to prove the checker still fails.
+- [ ] For indexed state updates, exercise every legal selected slot plus a distinct
+      off-zero fallback path. Slot-zero-only tests can hide a callee that writes the
+      wrong queue, pipe, ring, or engine.
 - [ ] Apply a plausible semantic mutation while holding the specification fixed,
       and a specification mutation while holding the implementation fixed. Record
       which proof or gate fails; if neither fails, narrow the claim.

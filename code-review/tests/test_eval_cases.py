@@ -123,6 +123,46 @@ class EvalCaseTests(unittest.TestCase):
         self.assertIn("active shell commands", shell_checklist)
         self.assertIn("embedded absolute source", shell_checklist)
 
+    def test_transitive_proof_qualification_case_is_complete(self) -> None:
+        case = ROOT / "eval-cases" / "transitive-proof-qualification"
+        manifest = json.loads((case / "manifest.json").read_text(encoding="utf-8"))
+        expected = json.loads(
+            (case / manifest["expected_results"]).read_text(encoding="utf-8")
+        )
+
+        self.assertEqual(manifest["finding_count"], len(expected["buggy_findings"]))
+        self.assertEqual(expected["fixed_expected_findings"], 0)
+        self.assertTrue((case / manifest["buggy_input"]).is_file())
+        self.assertTrue((case / manifest["fixed_counterexample"]).is_file())
+
+        mechanisms = " ".join(item["mechanism"] for item in expected["buggy_findings"])
+        self.assertIn("producer-layout-dependent", mechanisms)
+        self.assertIn("unpinned transitive callee", mechanisms)
+        self.assertIn("no verified consumer", mechanisms)
+        self.assertIn("commented command", mechanisms)
+        self.assertIn("outside every checker input", mechanisms)
+
+        reviewer_prompt = (ROOT / "prompts" / "reviewer.md").read_text(
+            encoding="utf-8"
+        )
+        operating_model = (ROOT / "operating-model.md").read_text(encoding="utf-8")
+        rust_checklist = (ROOT / "checklists" / "rust.md").read_text(
+            encoding="utf-8"
+        )
+        python_checklist = (ROOT / "checklists" / "python.md").read_text(
+            encoding="utf-8"
+        )
+        docs_checklist = (ROOT / "checklists" / "documentation.md").read_text(
+            encoding="utf-8"
+        )
+
+        self.assertIn("## Mandatory probe ledger", reviewer_prompt)
+        self.assertIn("recursively enumerate executable callees", reviewer_prompt)
+        self.assertIn("hazard-to-probe manifest", operating_model)
+        self.assertIn("root of a recursive trust closure", rust_checklist)
+        self.assertIn("pins a caller recursively binds", python_checklist)
+        self.assertIn("validated checker/coverage input", docs_checklist)
+
 
 if __name__ == "__main__":
     unittest.main()

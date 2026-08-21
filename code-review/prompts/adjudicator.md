@@ -31,6 +31,9 @@ record the coverage gap.
 2. Compare the changed-language/file-class inventory with the execution manifest.
    If a material executable or normative class lacks its required specialist, mark
    the affected category `Unscored` and keep the review provisional.
+   Also compare every review's Mandatory probe ledger with the applicable
+   hazard-to-probe manifest. Missing applicable probes are coverage gaps, even when
+   the reviewer returned no findings.
 3. Normalize severity, confidence, category, locations, and evidence to the common
    schema. A candidate lacking mechanism, reachable trigger, impact, or a decisive
    validation step is a question, not a confirmed finding.

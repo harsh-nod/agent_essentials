@@ -73,6 +73,11 @@ review; normative procedures and safety contracts are executable interfaces.
 
 ## Maintainability and verification
 
+- [ ] Every normative trust-boundary, qualification, proof, or waiver document is
+      either a validated checker/coverage input or explicitly labeled descriptive
+      with a named enforcement owner. Deleting or widening a normative claim must
+      not leave the claimed gate green merely because the Markdown is outside every
+      checker input.
 - [ ] Terminology and abbreviations follow repository/domain conventions; a rename
       updates definitions and all normative uses without inventing false scope.
 - [ ] Tables, references, headings, anchors, lists, and fences render correctly;

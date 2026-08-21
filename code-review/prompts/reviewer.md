@@ -89,6 +89,28 @@ scope. Be adversarial toward assumptions, never toward the author.
 9. Stop when the assigned scope has been covered. Do not fill a quota or pad with
    style preferences.
 
+## Mandatory probe ledger
+
+Before returning no findings, record every applicable high-risk probe below. For
+each one, give the exact mutation or command, its result, and the invariant it
+tested. If a probe cannot be run, mark it `not run`, explain why, and carry the
+missing evidence into Coverage limits. Guidance elsewhere in this prompt does not
+count as coverage unless the ledger shows that the probe was actually attempted.
+
+- Formal contract: delete the complete material postcondition while holding the
+  implementation fixed; identify the verified consumer whose proof must fail.
+- Source/policy pin: recursively enumerate executable callees and name-resolution
+  inputs reachable from every pinned owner; after rebinding intended digests,
+  mutate a callee at a nonzero/nontrivial index and require the gate to fail.
+- Artifact identity: distinguish same-environment base/candidate byte equality
+  from a producer-layout-dependent absolute digest; try independent paths and
+  record distinct build/artifact provenance.
+- Shell enforcement: comment out, quote, or make the required command unreachable
+  and require the command-presence gate to fail.
+- Normative trust-boundary document: enumerate changed qualification, proof, and
+  waiver documents; show that each normative claim is a checked input or label it
+  explicitly descriptive and record the enforcement owner.
+
 ## Required finding schema
 
 Use one block per candidate, ordered Major, Minor, Nit. Use only the stated severity
@@ -151,6 +173,11 @@ and follow-ups using this format:
 ## Questions and follow-ups
 
 - ...
+
+## Mandatory probe ledger
+
+- <probe>: applicable | not applicable | not run; <mutation/command, result, and
+  invariant or coverage limit>
 
 ## Coverage limits
 

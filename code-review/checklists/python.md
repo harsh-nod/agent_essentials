@@ -91,6 +91,10 @@ hardware, security, ABI, or release artifacts.
       attributes, bounds, and name-resolution context, not only selected body
       substrings. Pair semantic weakening mutations with harmless formatting and
       comment controls.
+- [ ] A checker that pins a caller recursively binds or parses every executable
+      callee and selector in the claimed trust closure. After rebinding reviewed
+      digests, mutate a transitive callee at a nonzero/nontrivial index and require
+      a structural or behavioral oracle to reject it.
 - [ ] Evidence validation distinguishes internal consistency from provenance.
       Self-asserted commit, clean-tree, builder, attestor, and artifact fields do
       not authenticate a build unless checked against repository state or a trusted
@@ -102,3 +106,6 @@ hardware, security, ABI, or release artifacts.
 - [ ] CLI option groups are all-or-none. Supplying only provenance, only one
       archive, or another partial qualification tuple must fail, and failures go to
       stderr without tracebacks.
+- [ ] Normative proof, qualification, and waiver documents named by the checker are
+      actual validated inputs, not merely nearby Markdown. Widen or delete a key
+      claim and require the gate or an independent contract inventory to fail.

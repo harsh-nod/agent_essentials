@@ -48,6 +48,15 @@ For build-gate cases, include a required command present only in a comment, a
 workspace test that feature-unifies away the no-default body, and byte-identical
 base/head archives whose absolute digest changes with HOME/sysroot path length.
 
+For transitive qualification cases, include a digest-pinned caller whose unpinned
+callee writes slot zero for a nonzero selection, a complete formal postcondition
+with no verified consumer, and a normative refinement document outside every
+checker input. The corrected case must show a recursive trust-closure mutation,
+full-contract deletion rejected by a verified consumer, active-command parsing,
+relative artifact equality, and machine-checked normative claims. Evaluation of a
+review also checks its Mandatory probe ledger; mentioning a probe in the prompt is
+not recall evidence when the ledger says it was not attempted or omits it.
+
 ## Measurements
 
 Track by persona, model/provider/version/effort, language, and risk lane:

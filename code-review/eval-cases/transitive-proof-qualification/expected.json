@@ -1,0 +1,30 @@
+{
+  "buggy_findings": [
+    {
+      "category": "Architecture and compatibility",
+      "mechanism": "A producer-layout-dependent absolute archive digest is the admission criterion even though only same-environment base/candidate equality is stable.",
+      "decisive_mutation": "Build an equal base/candidate pair under an independent HOME/sysroot path and require relative byte identity without the original absolute digest."
+    },
+    {
+      "category": "Testing and verifiability",
+      "mechanism": "The pinned caller delegates selected installation to an unpinned transitive callee that writes slot zero for every nonzero selection.",
+      "decisive_mutation": "Rebind intended source digests, mutate the callee's destination index, and exercise every selected slot with distinct values."
+    },
+    {
+      "category": "Testing and verifiability",
+      "mechanism": "A complete frame postcondition has no verified consumer, so deleting it leaves verification green.",
+      "decisive_mutation": "Delete the entire postcondition and require a verified caller that uses each conjunct to fail."
+    },
+    {
+      "category": "Testing and verifiability",
+      "mechanism": "A raw-text gate accepts the required test command when it is only a commented command.",
+      "decisive_mutation": "Comment out the executable command and require active-command parsing to fail."
+    },
+    {
+      "category": "Maintainability and documentation",
+      "mechanism": "The normative refinement and qualification document sits outside every checker input, so its safety claims can widen without invalidating evidence.",
+      "decisive_mutation": "Widen a normative claim and require a document contract checker or reviewed-source inventory to reject it."
+    }
+  ],
+  "fixed_expected_findings": 0
+}
